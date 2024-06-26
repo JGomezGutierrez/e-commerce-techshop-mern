@@ -1,0 +1,140 @@
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.logo-img {
+  height: 80px; /* Ajusta el tamaño de la imagen */
+  margin-right: 10px; /* Espacio entre la imagen y el texto */
+  opacity: 1;
+}
+
+/* Estilos para el header */
+header {
+  height: 4rem; /* Equivalente a h-16 en Tailwind */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Equivalente a shadow-md en Tailwind */
+  background-color: #ffffff; /* Equivalente a bg-white en Tailwind */
+  position: fixed;
+  width: 100%;
+  z-index: 40;
+}
+
+/* Estilos para el contenedor dentro del header */
+header .container {
+  height: 100%;
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  align-items: center;
+  padding-left: 1rem; /* Equivalente a px-4 en Tailwind */
+  padding-right: 1rem; /* Equivalente a px-4 en Tailwind */
+  justify-content: space-between;
+}
+
+
+/* Estilos para el contenedor de búsqueda (mostrado en pantallas grandes) */
+.header-search {
+  display: none; /* Oculta el contenedor en pantallas pequeñas */
+}
+
+@media (min-width: 1024px) {
+  .header-search {
+    display: flex; /* Muestra el contenedor en pantallas grandes */
+  }
+}
+
+.header-search .search-input {
+  width: 500px; /* Ajuste del ancho del input */
+  padding: 0.2rem; /* Ajuste de relleno */
+  border: 1px solid #e2e8f0; /* Borde del input */
+  border-top-left-radius: 9999px; /* Redondeo máximo en la esquina superior izquierda */
+  border-bottom-left-radius: 9999px;/* Redondeo máximo en la esquina inferior izquierda */
+  outline: none; /* Equivalente a outline-none en Tailwind */
+}
+
+.header-search .search-icon {
+  font-size: 1.125rem; /* Equivalente a text-lg en Tailwind */
+  min-width: 50px;
+  height: 2rem; /* Equivalente a h-8 en Tailwind */
+  background-color:  #dd6b20; /* Equivalente a bg-red-600 en Tailwind */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-top-right-radius: 9999px; /* Redondeo máximo en la esquina superior derecha */
+  border-bottom-right-radius: 9999px; /* Redondeo máximo en la esquina inferior derecha */
+  color: #ffffff; /* Equivalente a text-white en Tailwind */
+  cursor: pointer; /* Cursor apuntador */
+}
+
+/* Estilos para el contenedor del menú de usuario */
+.header-user-menu {
+  display: flex;
+  align-items: center;
+  gap: 1rem; /* Espacio entre elementos */
+}
+
+  /* Estilos para el icono de perfil */
+.profile-icon {
+  position: relative;
+  font-size: 1.875rem; /* Equivalente a text-3xl en Tailwind */
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+}
+
+
+/* Estilos para el ícono del carrito */
+.cart-icon {
+  font-size: 1.5rem; /* Equivalente a text-2xl en Tailwind */
+  position: relative;
+  cursor: pointer;
+}
+
+/* Estilos para el contador del carrito */
+.cart-count {
+  background-color: #dc2626; /* Equivalente a bg-red-600 en Tailwind */
+  color: #ffffff; /* Color de texto equivalente a text-white en Tailwind */
+  width: 1.25rem; /* Equivalente a w-5 en Tailwind */
+  height: 1.25rem; /* Equivalente a h-5 en Tailwind */
+  border-radius: 9999px; /* Forma redondeada equivalente a rounded-full en Tailwind */
+  padding: 0.25rem; /* Equivalente a p-1 en Tailwind */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: -0.5rem; /* Ajuste adicional para la posición */
+  right: -0.5rem; /* Ajuste adicional para la posición */
+}
+
+.cart-count p {
+  font-size: 0.75rem; /* Tamaño de fuente más pequeño */
+}
+
+/* Estilos para el botón de logout */
+.logout-button {
+  border-radius: 9999px; /* Forma redondeada equivalente a rounded-full en Tailwind */
+  color: #ffffff; /* Color de texto equivalente a text-white en Tailwind */
+  color: #fff; 
+  background-color: #dd6b20;
+  padding-left: 0.75rem; /* Equivalente a px-3 en Tailwind */
+  padding-right: 0.75rem; /* Equivalente a px-3 en Tailwind */
+  padding-top: 0.25rem; /* Equivalente a py-1 en Tailwind */
+  padding-bottom: 0.25rem; /* Equivalente a py-1 en Tailwind */
+}
+
+.logout-button:hover {
+  background-color: #c05621; /* Color de fondo al pasar el cursor equivalente a hover:bg-red-700 en Tailwind */
+}
+
+/* Estilos para el enlace de login */
+.login-link {
+  padding: 0.75rem 1.5rem; /* Equivalente a px-3 py-1 en Tailwind */
+  border-radius: 9999px; /* Forma redondeada equivalente a rounded-full en Tailwind */
+  color: #ffffff; /* Color de texto equivalente a text-white en Tailwind */
+  background-color: #dc2626; /* Equivalente a bg-red-600 en Tailwind */
+}
+
+.login-link:hover {
+  background-color: #c53030; /* Color de fondo al pasar el cursor equivalente a hover:bg-red-700 en Tailwind */
+}

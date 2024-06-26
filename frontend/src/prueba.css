@@ -1,0 +1,127 @@
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.logo-img {
+  height: 80px; /* Ajusta el tamaño de la imagen */
+  margin-right: 10px; /* Espacio entre la imagen y el texto */
+  opacity: 1;
+}
+
+/* Estilos generales para el header */
+.header {
+  @apply h-16 shadow-md bg-white;
+}
+
+/* Estilos para el contenedor del header */
+.header-container{
+  @apply h-full container mx-auto flex items-center px-4 justify-between
+}
+
+/* Estilos para el buscador */
+.header-search{
+  @apply hidden lg:flex items-center w-full justify-between max-w-sm border rounded-full focus-within:shadow-md pl-2;
+}
+
+/* Estilos generales para input del buscador */
+.search-input{
+  @apply w-full outline-none;
+}
+
+/* Estilos generales para el incono del buscador */
+.search-icon{
+  @apply text-lg min-w-[50px] h-8  bg-yellow-500 flex items-center justify-center rounded-r-full text-white;
+}
+
+/* Estilos generales para el contenedor flex */
+.header-user-menu{
+    @apply flex items-center gap-7;
+  }
+  
+  /* Estilos para el contenedor del perfil de usuario */
+  .profile-icon-container {
+    @apply relative flex justify-center;
+  }
+  
+  /* Estilos para el icono de perfil */
+  .profile-icon {
+    @apply text-3xl cursor-pointer relative flex justify-center;
+  }
+  
+  /* Estilos para el menú desplegable */
+  .menu-dropdown {
+    @apply absolute bg-white bottom-0 top-11 h-auto p-2 shadow-lg rounded;
+  }
+  
+  /* Estilos para los elementos del menú */
+  .menu-item {
+    @apply whitespace-nowrap hidden md:block hover:bg-gray-100 p-2;
+  }
+  
+  /* Estilos para el enlace al carrito */
+  .cart-link {
+    @apply text-2xl relative;
+  }
+  
+  /* Estilos para el ícono del carrito */
+  .cart-icon {
+    @apply text-2xl relative;
+  }
+  
+  /* Estilos para el contador del carrito */
+  .cart-count {
+    @apply bg-red-600 text-white w-5 h-5 rounded-full p-1 flex items-center justify-center absolute -top-2 -right-3;
+  }
+  
+  /* Estilos para el botón de logout */
+  .logout-button {
+    @apply px-3 py-1 rounded-full text-white bg-yellow-500 hover:bg-yellow-600;
+  }
+  
+  /* Estilos para el enlace de login */
+  .login-link {
+    @apply px-3 py-1 rounded-full text-white bg-red-600 hover:bg-red-700;
+  }
+
+   /* Estilos para el login */
+  .login-container{
+    @apply mx-auto container p-4;
+  }
+
+  .login {
+    @apply bg-white p-5 w-full max-w-sm mx-auto;
+  }
+
+  .login-logo{
+    @apply w-20 h-20 mx-auto relative rounded-full overflow-hidden;
+  }
+
+  .form-input{  
+    @apply bg-slate-100 p-2 flex;
+  }
+
+  .input{
+    @apply w-full h-full outline-none bg-transparent;
+  }
+
+  .login-button{
+    @apply bg-yellow-600 hover:bg-yellow-700 text-white px-6 py-2 w-full max-w-[150px] rounded-full hover:scale-110 transition-all mx-auto block mt-4;
+  }
+
+  .link-forgot-password {
+    @apply block w-fit ml-auto hover:underline hover:text-red-600;
+  }
+
+  .link-signup{
+    @apply text-red-600 hover:underline hover:text-red-700;
+  }
+
+  .section-pages{
+    @apply flex-grow  min-h-[calc(100vh-120px)]
+  }
+
+  .upload-photo{
+    @apply text-xs bg-opacity-80 bg-slate-200 pb-4 pt-2 text-center text-red-600 absolute bottom-0 w-full cursor-pointer;
+  }
+  
