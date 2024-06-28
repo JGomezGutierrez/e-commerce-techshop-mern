@@ -68,7 +68,7 @@ const Login = () => {
               <button className='login-button'>Ingresar</button>
             </form>
 
-            <p className='my-5'> ¿Aún no tienes Cuenta? <NavLink to={'/sing-up'} className='link-signup'>¡Registrate!</NavLink></p>
+            <p className='my-5'> ¿Aún no tienes Cuenta? <NavLink to={'/registro'} className='link-signup'>¡Registrate!</NavLink></p>
 
         </div>
      
