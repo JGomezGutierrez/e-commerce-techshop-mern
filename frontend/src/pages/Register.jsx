@@ -47,6 +47,7 @@ const Register = () => {
          // Manejo de respuestas según el código de estado
         if (request.status === 201) {
           toast.success(data.message);
+          navigate('/login');
         } else if (request.status === 400) {
           toast.warn(data.message);
         } else if (request.status === 409) {
@@ -55,9 +56,9 @@ const Register = () => {
           toast.error(data.message);
         }
     
-        } catch (error) {
+        } catch (err) {
           toast.error("Error en la solicitud"); // Muestra un mensaje de error genérico
-          console.error("Error:", error);
+          console.error("Error:", err);
         }
       
       }else {

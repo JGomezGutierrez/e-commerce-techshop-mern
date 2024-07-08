@@ -1,57 +1,95 @@
-import React, { useState } from 'react';
+import React, {  useState } from 'react';
 import LoginIcons from '../assets/imagenavatar.gif';
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
 import { NavLink } from 'react-router-dom';
+import { Global } from '../helpers/Global';
+import { useForm } from '../hooks/useForm';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
+import useAuth from '../hooks/useAuth';
+
 
 
 const Login = () => {
 
   const [showPassword, setShowPassword] = useState(false)
 
-  const [data, setData] = useState({
+
+  //constante de navegacion
+  const navigate = useNavigate()
+  
+  // Estado para usar useAuth y setear los valos del usuario autenticado en el Provider automáticamente
+  const {setAuth} = useAuth();
+
+  const { form, changed } = useForm({
     email: "",
     password: ""
   });
 
-  const handleOnChange = (e) =>{
-    const {name , value} = e.target
+  // Guardar un usuario en la BD
+  const loginUser = async(e) => {
+     // prevenir que se actualice la pantalla
+    e.preventDefault();
+  
+    // Datos del formulario
+    let userToLogin = form;
+
+    try{
+      // Petición al backend
+      const request = await fetch(Global.url + "user/login", {
+        method: "POST",
+        body: JSON.stringify(userToLogin),
+        credentials: 'include',
+        headers: {
+          "Content-Type": "application/json"
+        }
+      });
  
-    setData((preve) => {
-      return {
-        ...preve,
-        [name] : value
+      // Obtener la información retornada por la request
+      const data = await request.json();
+
+      // Manejo de respuestas según el código de estado
+      if (request.ok && data.status === "success") {
+        toast.success(data.message);
+        // Cookies.set('token', data.token); // Guarda el token en la cookie
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("user", JSON.stringify(data.user));  // Guardar datos del usuario en localStorage
+        
+        setAuth({ token: data.token, user: data.user }); // Setear los datos del usuario en el Auth
+        
+        setTimeout(() => {
+          navigate('/inicio');
+        }, 1000);
+      } else {
+        toast.warn(data.message);
       }
-    })
-
+    } catch(error) {
+      toast.error("Error en el inicio de sesión");
+    }
   }
-
-  const saveData = (e) => {
-   e.preventDefault()
-  }
-  console.log("data login", data)
   
   return (
-    <section id='login'>
+    <section>
       <div className='login-container'>
        
         <div className='login'>
             <div className='login-logo'>
-              <img src={LoginIcons} alt="login icons" />
+               <img src={LoginIcons} alt="login icons" />
             </div>
 
-            <form className='pt-6 flex flex-col gap-2' onSubmit={saveData}>
+            <form className='pt-6 flex flex-col gap-2' onSubmit={loginUser}>
               <div className='grid'>
                   <label>Email:</label>
                   <div className='form-input'>
-                    <input type="email" name='email' value= {data.email} onChange={handleOnChange} placeholder='Ingresa tu correo electronico' className='input' />
+                    <input type="email" name='email' value= {form.email} onChange={changed} placeholder='Ingresa tu correo electronico' className='input' />
                   </div>
               </div>
 
               <div>
                   <label>Contraseña:</label>
                   <div className='form-input'>
-                    <input type={showPassword ? "text": "password"}  value={data.password} name='password' onChange={handleOnChange} placeholder='Ingresa tu contraseña' className='input' />
+                    <input type={showPassword ? "text": "password"}  value={form.password} name='password' onChange={changed} placeholder='Ingresa tu contraseña' className='input' />
                     <div className='cursor-pointer text-xl' onClick={()=>setShowPassword((preve) => !preve)}>
                         <span>
                           {
@@ -69,7 +107,7 @@ const Login = () => {
             </form>
 
             <p className='my-5'> ¿Aún no tienes Cuenta? <NavLink to={'/registro'} className='link-signup'>¡Registrate!</NavLink></p>
-
+        
         </div>
      
       </div>
@@ -77,4 +115,4 @@ const Login = () => {
   )
 }
 
-export default Login
+export default Login;

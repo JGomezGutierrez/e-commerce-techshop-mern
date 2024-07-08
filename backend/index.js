@@ -2,7 +2,8 @@
 import connection from './database/conection.js';
 import express, { json, urlencoded } from 'express';
 import cors from "cors";
-import UserRoutes from "./routes/user.js"
+import UserRoutes from "./routes/user.js";
+import cookieParser from "cookie-parser";
 
 //Mensaje de bienvenida
 console.log("API NODE arriba");
@@ -13,14 +14,18 @@ connection();
 
 // Crear Servidor de Node
 const app = express();
-const puerto = 3900 || process.env.PORT ; // Cambia el puerto si es necesario
+const puerto = process.env.PORT || 3900; // Cambia el puerto si es necesario
 
 // Configurar cors: permite que las peticiones se hagan directamente
-app.use(cors());
+app.use(cors({
+   origin: 'http://localhost:3000',
+   credentials: true
+}));
+app.use(cookieParser())
 
 // Conversion de datos (body a objetos JS)
-app.use(json());
-app.use(urlencoded({extended: true}));
+app.use(json()); // Para parsear JSON en las solicitudes
+app.use(urlencoded({extended: true})); // Para parsear datos URL-encoded
 
 // Configurar rutas
 app.use('/api/user', UserRoutes);

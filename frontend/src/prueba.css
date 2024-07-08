@@ -11,7 +11,7 @@
 
 /* Estilos generales para el header */
 .header {
-  @apply h-16 shadow-md bg-white;
+  @apply h-16 shadow-md bg-gray-700;
 }
 
 /* Estilos para el contenedor del header */
@@ -21,7 +21,7 @@
 
 /* Estilos para el buscador */
 .header-search{
-  @apply hidden lg:flex items-center w-full justify-between max-w-sm border rounded-full focus-within:shadow-md pl-2;
+  @apply hidden bg-white lg:flex items-center w-full justify-between max-w-sm border rounded-full focus-within:shadow-md pl-2;
 }
 
 /* Estilos generales para input del buscador */
@@ -66,7 +66,7 @@
   
   /* Estilos para el ícono del carrito */
   .cart-icon {
-    @apply text-2xl relative;
+    @apply text-2xl relative  text-white;
   }
   
   /* Estilos para el contador del carrito */
@@ -125,3 +125,32 @@
     @apply text-xs bg-opacity-80 bg-slate-200 pb-4 pt-2 text-center text-red-600 absolute bottom-0 w-full cursor-pointer;
   }
   
+  .logout-icon{
+    @apply text-3xl cursor-pointer relative flex justify-center;
+  }
+
+  .customShadow{
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 2);
+  }
+
+  .userTable{
+    @apply bg-white
+  }
+
+  .userTable th{
+   @apply border text-base font-medium
+  }
+
+  .userTable td{
+    @apply border text-base text-center
+   }
+
+   /* Estilos para el modal */
+
+   .modal-bg {
+    @apply fixed top-0 bottom-0 left-0 right-0 w-full h-full z-50 flex justify-center items-center bg-black bg-opacity-50;
+  }
+  
+  .modal-content {
+    @apply bg-white shadow-md p-4 w-full max-w-sm relative;
+  }
