@@ -11,7 +11,7 @@
 
 /* Estilos generales para el header */
 .header {
-  @apply h-16 shadow-md bg-gray-700;
+  @apply h-16 shadow-md bg-gray-700 fixed w-full z-40;
 }
 
 /* Estilos para el contenedor del header */
@@ -118,7 +118,7 @@
   }
 
   .section-pages{
-    @apply flex-grow  min-h-[calc(100vh-120px)]
+    @apply flex-grow  min-h-[calc(100vh-120px)] pt-16
   }
 
   .upload-photo{
@@ -153,4 +153,18 @@
   
   .modal-content {
     @apply bg-white shadow-md p-4 w-full max-w-sm relative;
+  }
+
+  .modal-content-products  {
+    @apply bg-white shadow-md p-4 w-full max-w-2xl h-full max-h-[80%] overflow-hidden;
+  }
+
+  /*scrollbar hidden*/
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
+
+  .scrollbar-none {
+      -ms-overflow-style: none;  /* IE and Edge */
+      scrollbar-width: none;  /* Firefox */
   }

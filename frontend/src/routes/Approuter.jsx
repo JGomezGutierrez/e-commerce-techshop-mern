@@ -11,14 +11,16 @@ import AdminPanel from '../pages/AdminPanel';
 import { AuthProvider } from '../context/AuthProvider';
 import Users from '../pages/Users';
 import Products from '../pages/Products';
+import Category from '../pages/Category';
+import ProductDetails from '../pages/ProductDetails';
 
 const Approuter = () => {
  
  
     return (
    
-    <Router>
-        <AuthProvider>
+    <AuthProvider>
+        <Router>
             {/*Menú de navegacion */}
             <Header/>
             {/*Configurar las rutas */}
@@ -29,6 +31,8 @@ const Approuter = () => {
                     <Route path='/login'                element={<Login />} />
                     <Route path='/olvido-contraseña'    element={<ForgotPassword />} />
                     <Route path='/registro'             element={<Register />} />
+                    <Route path='/categoria-producto/:categoryName'   element={<Category/>} />
+                    <Route path='/producto/:id'         element={<ProductDetails/>} />
                     {/* Ruta del panel administrativo */}
                     <Route path='/panel-administrativo/*' element={<AdminPanel />}>
                         <Route index            element={<Users />} />
@@ -39,9 +43,9 @@ const Approuter = () => {
             </section>
             <Footer/>
             {/* Contenedor de Toast */}
-            <ToastContainer/>
-        </AuthProvider>        
-    </Router>
+            <ToastContainer/>   
+         </Router>
+    </AuthProvider> 
    
   )
 }

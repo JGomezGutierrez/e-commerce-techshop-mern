@@ -3,12 +3,12 @@ import jwt from 'jwt-simple';
 import moment from 'moment';
 
 //Establecer una clave secreta 
-const secret = 'sECRET_kEYS_pROJECT_sOCIAL_nETWORK';
+const secret = 'sECRET_kEYS_pROJECT_eCoMmErCe';
 
 //Método para generar tokens
 const createToken= (user) =>{
     const payload = {
-      userId: user.id,
+      userId: user._id,
       email:  user.email,
       iat: moment().unix(),
       exp: moment().add(30, 'days').unix()

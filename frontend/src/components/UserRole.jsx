@@ -2,11 +2,8 @@ import React, { useState } from 'react';
 import { IoMdCloseCircle } from "react-icons/io";
 import { Global } from '../helpers/Global';
 import { toast } from 'react-toastify';
+// import rol from '../helpers/roles';
 
-  const rol = {
-    user: "Usuario",
-    admin: "Administrador"
-  };
 
   const UserRole = ({
       name,
@@ -16,38 +13,47 @@ import { toast } from 'react-toastify';
       onUpdate 
     }) => {
 
+  const rol = {
+  user: "usuario",
+  admin: "administrador"
+  }
+
   const [userRole, setUserRole] = useState(role);
 
   const handleOnChangeSelect = (e) => {
     setUserRole(e.target.value);
-    console.log(e.target.value);
   }
-
 
 
   const updatedUserRole = async () => {
-    
-    const request = await fetch(Global.url + "user/update", {
-      method: "PUT",
-      credentials: 'include',
-      body: JSON.stringify({
-        role: UserRole
-      }),
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": localStorage.getItem("token")
+    try {
+      const response = await fetch(Global.url + "user/updateRol", {
+        method: "PUT",
+        credentials: 'include',
+        body: JSON.stringify({
+          email: email,
+          role: userRole
+        }),
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": localStorage.getItem("token")
+        }
+      });
+
+      const data = await response.json();
+
+      if (data.status === "success") {
+        toast.success(data.message);
+        onUpdate(email, userRole);
+        onClose();
+      } else {
+        throw new Error(data.message || 'Error al actualizar el rol del usuario');
       }
-    });
-
-    // Obtener la información retornada por la request
-    const data = await request.json();
-
-    if(data.status === "success"){
-      toast.success(data.message)
-      onClose()
+    } catch (error) {
+      console.error("Error al actualizar el rol del usuario:", error);
+      toast.error(error.message);
     }
-
-  }
+  };
 
 
     return (
@@ -65,7 +71,7 @@ import { toast } from 'react-toastify';
                     <p>Rol</p>
                     <select className='border px-4' value={userRole} onChange={handleOnChangeSelect}>
                         {Object.keys(rol).map(key => (
-                            <option value={rol[key]} key={key}>{rol[key]}</option>
+                            <option value={key} key={key}>{rol[key]}</option>
                         ))}
                     </select>
                 </div>

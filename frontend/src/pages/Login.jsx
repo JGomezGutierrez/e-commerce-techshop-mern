@@ -22,7 +22,7 @@ const Login = () => {
   // Estado para usar useAuth y setear los valos del usuario autenticado en el Provider automáticamente
   const {setAuth} = useAuth();
 
-  const { form, changed } = useForm({
+  const { form, handleOnchange } = useForm({
     email: "",
     password: ""
   });
@@ -82,14 +82,14 @@ const Login = () => {
               <div className='grid'>
                   <label>Email:</label>
                   <div className='form-input'>
-                    <input type="email" name='email' value= {form.email} onChange={changed} placeholder='Ingresa tu correo electronico' className='input' />
+                    <input type="email" name='email' value= {form.email} onChange={handleOnchange} placeholder='Ingresa tu correo electronico' className='input' />
                   </div>
               </div>
 
               <div>
                   <label>Contraseña:</label>
                   <div className='form-input'>
-                    <input type={showPassword ? "text": "password"}  value={form.password} name='password' onChange={changed} placeholder='Ingresa tu contraseña' className='input' />
+                    <input type={showPassword ? "text": "password"}  value={form.password} name='password' onChange={handleOnchange} placeholder='Ingresa tu contraseña' className='input' />
                     <div className='cursor-pointer text-xl' onClick={()=>setShowPassword((preve) => !preve)}>
                         <span>
                           {

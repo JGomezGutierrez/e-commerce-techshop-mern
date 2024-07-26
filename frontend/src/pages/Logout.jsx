@@ -1,11 +1,11 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-// import Cookies from 'js-cookie';
 import useAuth from '../hooks/useAuth';
 
 const Logout = () => {
   const { setAuth } = useAuth();
+  
   const navigate = useNavigate();
 
   const handleLogout = () => {

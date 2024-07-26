@@ -3,9 +3,12 @@ import { Global } from "../helpers/Global";
 import moment from 'moment';
 import UserRole from '../components/UserRole';
 import {toast} from 'react-toastify'
+import { useNavigate } from 'react-router-dom';
+import useAuth from '../hooks/useAuth';
 
 const Users = () => {
-  
+  const { auth } = useAuth();
+  const navigate = useNavigate();
   const [users, setUsers] = useState([]);
 
   const [selectedUser, setSelectedUser] = useState({
@@ -19,18 +22,20 @@ const Users = () => {
   
 
   useEffect(() => {
-    getUSerAll();
-  }, []);
+    if (!auth?.user) {
+      navigate('/login'); // Redirige a la página de inicio de sesión si no está autenticado
+    } else {
+      getAllUsers();
+    }
+  }, [auth, navigate]);
 
-  const getUSerAll = async () => {
+  const getAllUsers = async () => {
     try {
       // Obtener el token 
       const token = localStorage.getItem('token');
       
       // Comprobar si hay token
-      if (!token) {
-        return false;
-      }
+      if (!token) return false;
 
 
       const response = await fetch(Global.url + "user/list", {
@@ -54,17 +59,24 @@ const Users = () => {
     }
   };
 
+  const handleUpdateUserRole = (email, newRole) => {
+    setUsers(prevUsers =>
+      prevUsers.map(user =>
+        user.email === email ? { ...user, role: newRole } : user
+      )
+    );
+  };
+
   const roleMap = {
     user: "Usuario",
     admin: "Administrador"
   };
 
-
-
+ 
   return (
     <div className='bg-white pb-4'>
       <table className='w-full userTable'>
-        <thead>
+        <thead className='bg-black text-white'>
           <tr>
             <th>#</th>
             <th>Nombre</th>
@@ -91,8 +103,8 @@ const Users = () => {
                   <td>
                     <button className='bg-green-100 p-2 rounded-full cursor-pointer hover:bg-green-500 hover:text-white' 
                     onClick={()=>{
-                      setSelectedUser(user)
-                       setOpenModal(true)
+                      setSelectedUser(user);
+                       setOpenModal(true);
                     }}
                       >
                       Editar
@@ -113,6 +125,7 @@ const Users = () => {
             name  = {selectedUser.name}
             email = {selectedUser.email}
             role  = {selectedUser.role}
+            onUpdate={handleUpdateUserRole}
         />
         )
       }

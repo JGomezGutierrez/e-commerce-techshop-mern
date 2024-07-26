@@ -3,6 +3,7 @@ import connection from './database/conection.js';
 import express, { json, urlencoded } from 'express';
 import cors from "cors";
 import UserRoutes from "./routes/user.js";
+import ProductRoutes from "./routes/product.js"
 import cookieParser from "cookie-parser";
 
 //Mensaje de bienvenida
@@ -29,6 +30,7 @@ app.use(urlencoded({extended: true})); // Para parsear datos URL-encoded
 
 // Configurar rutas
 app.use('/api/user', UserRoutes);
+app.use('/api/product', ProductRoutes);
 
 //Configurar el servidor para escuchar las peticiones HTTP 
 app.listen(puerto, () => {

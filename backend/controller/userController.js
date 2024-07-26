@@ -4,7 +4,6 @@ import {createToken} from "../services/jwt.js";
 
 
 
-
 //Acciones de prueba
 export const testUser = (req, res) => {
     return res.status(200).send({
@@ -155,7 +154,7 @@ export const profile = async (req, res) => {
     }
 
     // Buscar al usuario en la BD, excluimos la contraseña, rol, versión.
-    const userProfile = await userModel.findById(userId).select('-password -role -__v');
+    const userProfile = await userModel.findById(userId).select('-password -__v');
 
     // Verificar si el usuario existe
     if (!userProfile) {
@@ -223,84 +222,46 @@ export const listUsers = async (req, res) => {
   }
 }
 
-//Método para actualizar los datos del usuario
-export const updateUser = async (req, res)=>{
+
+// Método para actualizar el rol del usuario
+export const updateUserRole = async (req, res) => {
   try {
-    //Recoger informacion del usuario al actualizar
-    let userIdenty = req.user;
+    // Recoger información del usuario al actualizar
     let userToUpdate = req.body;
 
-    //Validar que los campos necesarios esten presentes
-     if (!userToUpdate.email){
+    // Validar que los campos necesarios estén presentes
+    if (!userToUpdate.email) {
       return res.status(400).send({
         status: "error",
-        message: "¡el campo email es requerido!"
+        message: "¡El campo email es requerido!"
       });
     }
 
-    // Eliminar campos sobrantes
-    delete userToUpdate.iat;
-    delete userToUpdate.exp;
-    delete userToUpdate.role;
-    delete userToUpdate.profileAvatar;
-
-    // Comprobar si el usuario ya existe 
-    const users = await userModel.find(
-        {email: userToUpdate.email.toLowerCase()}
-    ).exec();
-
-    //Verificar si el usuario esta duplicado y evitar conflicto
-    const isDuplicateUser = users.some(user => {
-    return user && user._id.toString() !== userIdenty.userId;
-    });
-
-    if (isDuplicateUser){
-      return res.status(400).send({
-      status:"error",
-      message:"Solo se puede actualizar los datos del usuario logueado"
-      });
-    }
-
-    //Cifrar la contraseña si se proporciona
-    if(!userToUpdate.password){
-     try {
-      let pwd = await bcrypt.hash(userToUpdate.password, 10);
-      userToUpdate.password = pwd;
-     } catch (haserror) {
-      return res.status(500).send({
-        status: "error",
-        message: "Error al cifrar la contraseña"
-      });
-     }
-    } else{
-      delete userToUpdate.password;
-    }
- 
-    // Actualizar el usuario modificado
-    let userUpdated = await userModel.findByIdAndUpdate(userIdenty.userId,userToUpdate, { new:
-    true });
-
-    console.log("user updated :userUpdated " )
+    // Buscar y actualizar el usuario por el correo electrónico
+    let userUpdated = await userModel.findOneAndUpdate(
+      { email: userToUpdate.email.toLowerCase() },
+      { role: userToUpdate.role },
+      { new: true }
+    );
 
     if (!userUpdated) {
       return res.status(400).send({
-        status:"error",
-        message:"Error al actualizar el usuario"
+        status: "error",
+        message: "Error al actualizar el usuario"
       });
     }
 
-    // Devolver respuesta existosa con el usuario actualizado
+    // Devolver respuesta exitosa con el usuario actualizado
     return res.status(200).json({
       status: "success",
-      message:"¡Usuario actualizado correctamente!",
+      message: "¡Usuario actualizado correctamente!",
       user: userUpdated
     });
   } catch (error) {
-    console.log("Error al actualizar los datos del usuario", error);
+    console.log("Error al actualizar el rol del usuario", error);
     return res.status(500).send({
       status: "error",
-      message:"Error al actualizar los datos del usuario"
+      message: "Error al actualizar el rol del usuario"
     });
   }
-}
-
+};

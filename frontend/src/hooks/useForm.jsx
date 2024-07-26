@@ -9,7 +9,7 @@ export const useForm = (initialObj = {}) => {
   const [form, setForm] = useState(initialObj);
 
   // Método que recibe un target que a su vez va a recibir un input
-  const changed = ({target}) => {
+  const handleOnchange = ({target}) => {
     const {name, value} = target;
 
     setForm({
@@ -22,7 +22,7 @@ export const useForm = (initialObj = {}) => {
   return {
     form,
     setForm,
-    changed
+    handleOnchange
   }
 
 }

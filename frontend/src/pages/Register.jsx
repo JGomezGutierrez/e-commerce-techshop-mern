@@ -16,7 +16,7 @@ const Register = () => {
   const navigate = useNavigate()
   
   //Usamos el hook personalizado useForm para cargar los datos del formulario
-  const { form, setForm, changed } = useForm({
+  const { form, setForm, handleOnchange } = useForm({
     email: "",
     password: "",
     name: "",
@@ -93,21 +93,21 @@ const Register = () => {
               <div className='grid'>
                   <label>Nombre:</label>
                   <div className='form-input'>
-                    <input type="text" name='name' value= {form.name} onChange={changed} placeholder='Ingresa tu nombre' className='input' />
+                    <input type="text" name='name' value= {form.name} onChange={handleOnchange} placeholder='Ingresa tu nombre' className='input' />
                   </div>
               </div>
 
               <div className='grid'>
                   <label>Email:</label>
                   <div className='form-input'>
-                    <input type="email" name='email' value= {form.email} onChange={changed} placeholder='Ingresa tu correo electronico' className='input' />
+                    <input type="email" name='email' value= {form.email} onChange={handleOnchange} placeholder='Ingresa tu correo electronico' className='input' />
                   </div>
               </div>
 
               <div>
                   <label>Contraseña:</label>
                   <div className='form-input'>
-                    <input type={showPassword ? "text": "password"}  value={form.password} name='password' onChange={changed} placeholder='Ingresa tu contraseña' className='input' />
+                    <input type={showPassword ? "text": "password"}  value={form.password} name='password' onChange={handleOnchange} placeholder='Ingresa tu contraseña' className='input' />
                     <div className='cursor-pointer text-xl' onClick={()=>setShowPassword((preve) => !preve)}>
                         <span>
                           {
@@ -121,7 +121,7 @@ const Register = () => {
               <div>
                   <label>Confirmar Contraseña:</label>
                   <div className='form-input'>
-                    <input type={showConfirmPassword ? "text": "password"}  value={form.confirmPassword} name='confirmPassword' onChange={changed} placeholder='Confirma tu contraseña' className='input' />
+                    <input type={showConfirmPassword ? "text": "password"}  value={form.confirmPassword} name='confirmPassword' onChange={handleOnchange} placeholder='Confirma tu contraseña' className='input' />
                     <div className='cursor-pointer text-xl' onClick={()=>setShowConfirmPassword((preve) => !preve)}>
                         <span>
                           {
