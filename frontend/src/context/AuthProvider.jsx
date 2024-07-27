@@ -11,6 +11,7 @@ export const AuthProvider = ({ children }) => {
   // Estado local para guardar la información del usuario y verificar si está autenticado
   const [auth, setAuth] = useState({});
   const [loading, setLoading] = useState(true);
+  const [cartCount, setCartCount] = useState(0);
 
   // Efecto para cargar la información del usuario al inicio
   useEffect(() => {
@@ -36,7 +37,7 @@ export const AuthProvider = ({ children }) => {
           method: "GET",
           credentials: 'include',
           headers: {
-            "Authorization": `Bearer ${token}`
+            "Authorization": token
           }
         });
 
@@ -48,11 +49,12 @@ export const AuthProvider = ({ children }) => {
 
         if (data.status === "success") {
           setAuth(data.user);
+          await fetchCartCount(token); // Llamar a la función para contar los productos en el carrito
         } else {
           setAuth(null);
         }
       } catch (error) {
-        console.error("Failed to fetch user profile:", error);
+        console.error("No se pudo obtener el perfil del usuario:", error);
         setAuth(null);
       } finally {
         setLoading(false);
@@ -62,6 +64,35 @@ export const AuthProvider = ({ children }) => {
     authUser();
   }, []);
 
+
+  const fetchCartCount = async (token) => {
+    try {
+      setLoading(true);
+      const response = await fetch(Global.url + "cart/cartcountitems", {
+        method: "GET",
+        headers: {
+          "Authorization": token
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+
+      if (data.status === "success") {
+        setCartCount(data.count);
+      } else {
+        setCartCount(0);
+      }
+    } catch (error) {
+      console.error("No se pudo obtener el recuento del carrito:", error);
+    }finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -70,6 +101,8 @@ export const AuthProvider = ({ children }) => {
         setAuth,
         loading,
         setLoading,
+        cartCount,
+        setCartCount
       }}
     >
       {children} {/* Renderiza los componentes hijos envueltos por el proveedor */}

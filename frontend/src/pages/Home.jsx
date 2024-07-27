@@ -11,7 +11,7 @@ const Home = () => {
       <CategoryList/>
       <SliderProducts/>
 
-      <HorizontalCardProduct category={"airpods"}   title={"Top's Airpodes"}/>
+      <HorizontalCardProduct category={"airpods"}   title={"Top's Airpods"}/>
       <HorizontalCardProduct category={"camera"}    title={"Lo más popular en Cámaras"}/>
       
       <VerticalCardProduct category={"Cellphone"} title={"Celulares en descuento"}/>

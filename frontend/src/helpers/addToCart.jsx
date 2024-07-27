@@ -6,11 +6,20 @@ const addToCart = async (e, id) => {
     e?.preventDefault();
 
     try {
+        // Obtener el token del localStorage
+        const token = localStorage.getItem('token');
+
+        if (!token) {
+            toast.error("Usuario no autenticado");
+            return;
+        }
+        
         const response = await fetch(Global.url + "cart/addtocart", {
             method: "POST",
             credentials: 'include',
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                "authorization" : token
             },
             body: JSON.stringify({ productId: id }),
         });

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Logo from './Logo';
 import { GrSearch } from "react-icons/gr";
-import { FaUserCircle, FaShoppingCart } from "react-icons/fa";
+import { FaUserCircle } from "react-icons/fa";
 import { NavLink } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
 import Logout from '../pages/Logout';
@@ -14,9 +14,9 @@ import { BsCart3 } from "react-icons/bs";
 const Header = () => {
 
   // Estado para usar el contexto
-  const { auth } = useAuth();
-  
+  const { auth, cartCount  } = useAuth();
   const [menuDisplay, setMenuDisplay] = useState(false);
+
 
   return (
     <header className='header'>
@@ -68,12 +68,17 @@ const Header = () => {
               
           </div>
 
-          <div className='cart-icon'>
-            <span><BsCart3 className=''/></span>
-            <div className='cart-count'>
-            <p className='text-sm'>0</p>
-            </div>
-          </div>
+              {
+                 auth?.user?.id && (
+                  <div className='cart-icon'>
+                  <span><BsCart3 className=''/></span>
+                  <div className='cart-count'>
+                    <p className='text-sm'>{cartCount}</p>
+                  </div>
+              </div>
+                 )
+
+              }
 
           <div>
             {

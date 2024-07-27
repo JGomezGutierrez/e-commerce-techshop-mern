@@ -33,6 +33,7 @@ const Approuter = () => {
                     <Route path='/registro'             element={<Register />} />
                     <Route path='/categoria-producto/:categoryName'   element={<Category/>} />
                     <Route path='/producto/:id'         element={<ProductDetails/>} />
+                    
                     {/* Ruta del panel administrativo */}
                     <Route path='/panel-administrativo/*' element={<AdminPanel />}>
                         <Route index            element={<Users />} />

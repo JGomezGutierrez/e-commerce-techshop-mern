@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Global } from '../helpers/Global';
 import currencyRates from '../helpers/currencyRates';
-import VerticalCardProduct from '../components/VerticalCard';
+import RecommendedProducts from '../components/RecommendedProducts';
 
 const ProductDetails = () => {
   const [product, setProduct] = useState({
@@ -23,7 +23,7 @@ const ProductDetails = () => {
 
   const [zoomImage, setZoomImage] = useState (false)
 
-  const getProductsDetails = async () => {
+  const getProductsDetails = useCallback(async () => {
     setLoading(true);
     try {
       const request = await fetch(Global.url + "product/product-details", {
@@ -49,11 +49,11 @@ const ProductDetails = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [params.id]);
 
   useEffect(() => {
     getProductsDetails();
-  }, [params.id]);
+  }, [getProductsDetails]);
 
   const handleMouseEnter = (img) => {
     setActiveImage(img);
@@ -70,7 +70,7 @@ const ProductDetails = () => {
       x,
       y,
     });
-  }, [zoomImageCoordinate]);
+  }, []);
 
   const handleLeaveImageZoom = () => {
     setZoomImage(false)
@@ -158,7 +158,7 @@ const ProductDetails = () => {
         </div>
       </div>
 
-      <VerticalCardProduct category={product.category} title={"Tambien te puede interesar"}/>
+      <RecommendedProducts category={product.category} title={"Tambien te puede interesar"}/>
 
     </div>
   );

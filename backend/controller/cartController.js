@@ -1,4 +1,5 @@
-import addToCartModel from '../models/cartModel.js'
+import cartModel from '../models/cartModel.js';
+
 
 //Acciones de prueba
 export const testCart = (req, res) => {
@@ -14,10 +15,10 @@ export const addToCart = async (req, res) => {
 
     // Recoger datos de la petición
     const { productId } = req.body;
-    const currentUser = req.userId;
+    const userId = req.user.userId;
 
      // Verificar si el producto ya está en el carrito del usuario actual
-    const productInCart = await addToCartModel.findOne({productId: productId, userId: currentUser});
+    const productInCart = await cartModel.findOne({productId: productId, userId: userId});
 
     if (productInCart) {
         return res.status(404).json({
@@ -29,11 +30,11 @@ export const addToCart = async (req, res) => {
     const payload = {
         productId: productId, 
         quantity: 1,
-        userId: currentUser,   
+        userId: userId,   
     }
 
     // Crear una instancia del modelo addToCartModel con los datos validados
-    let addToCart_to_save = new addToCartModel(payload)
+    let addToCart_to_save = new cartModel(payload)
 
     // Guardar el producto en la base de datos
     await addToCart_to_save.save();
@@ -54,3 +55,42 @@ export const addToCart = async (req, res) => {
        
     }
 }
+
+//Metodo para contar productos 
+export const countAddToCart = async (req, res) => {
+  try {
+
+  // Recoger datos de la petición
+  const userId = req.user.userId;
+
+  // Contar los productos en el carrito del usuario actual
+  const count = await cartModel.countDocuments({userId: userId});
+
+    // Verificar si hay productos en el carrito
+  if (count === 0) {
+      return res.status(200).json({
+        status: "empty",
+        message: "No hay productos en el carrito",
+        count: count
+      });
+    }
+
+
+  /// Devolver respuesta exitosa con la cantidad de productos
+  return res.status(201).json({
+      status: "success",
+      message: "Productos contados correctamente",
+      count: count
+    });
+
+  } catch (error) {
+    console.log("Error al contar productos", error) 
+    return res.status(500).send({
+      status:"error",
+      message:"Error al contar productos"
+  }) 
+     
+  }
+}
+
+

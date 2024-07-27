@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import image1 from '../assets/banner/imagen1_web.png';
-import image2 from '../assets/banner/img2_mobile.webp';
-import image3 from '../assets/banner/img3_mobile.jpg';
-import image4 from '../assets/banner/img4_mobile.jpg';
+import image1 from '../assets/slider/imagen1_web.png';
+import image2 from '../assets/slider/imagen1_web.png';
+import image3 from '../assets/slider/imagen1_web.png';
+import image4 from '../assets/slider/imagen1_web.png';
 import { FaAngleRight } from "react-icons/fa6";
 import { FaAngleLeft } from "react-icons/fa6";
 

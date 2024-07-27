@@ -13,4 +13,4 @@ const addToCartSchema = new Schema({
 //Añadir plugin de pagination
 addToCartSchema.plugin(mongoosePagination);
 
-export default model("addToCartModel", addToCartSchema, "addToCart");
+export default model("CartModel", addToCartSchema, "cart");
