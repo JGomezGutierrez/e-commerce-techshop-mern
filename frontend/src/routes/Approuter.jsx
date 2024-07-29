@@ -13,6 +13,7 @@ import Users from '../pages/Users';
 import Products from '../pages/Products';
 import Category from '../pages/Category';
 import ProductDetails from '../pages/ProductDetails';
+import ShoppingCart from '../pages/ShoppingCart';
 
 const Approuter = () => {
  
@@ -33,6 +34,7 @@ const Approuter = () => {
                     <Route path='/registro'             element={<Register />} />
                     <Route path='/categoria-producto/:categoryName'   element={<Category/>} />
                     <Route path='/producto/:id'         element={<ProductDetails/>} />
+                    <Route path='/carrito-de-compra'    element={<ShoppingCart/>} />
                     
                     {/* Ruta del panel administrativo */}
                     <Route path='/panel-administrativo/*' element={<AdminPanel />}>

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import useAuth from '../hooks/useAuth';
 import {  FaUserCircle } from "react-icons/fa";
 import { Link, Outlet, Route, Routes, useNavigate } from 'react-router-dom';
@@ -8,17 +8,24 @@ import Products from './Products';
 
 const AdminPanel = () => {
 
-const { auth } = useAuth();
-const navigate = useNavigate();
+  const { auth } = useAuth();
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
 
-useEffect(() => {
-  // Verificar si auth o auth.user están indefinidos antes de acceder a sus propiedades
-  if (!auth || !auth.user || auth.user.role !== 'admin') {
-    navigate('/'); // Redirigir a la página de inicio si no hay autenticación o el rol no es 'admin'
+  useEffect(() => {
+    // Verificar si auth o auth.user están indefinidos antes de acceder a sus propiedades
+    if (!auth || !auth.user || auth.user.role !== 'admin') {
+      navigate('/'); // Redirigir a la página de inicio si no hay autenticación o el rol no es 'admin'
+    }else {
+      setLoading(false); // Setear loading a false si la autenticación es correcta
+    }
+  }, [auth, navigate]);
+
+
+  // Mostrar un indicador de carga mientras se verifica la autenticación
+  if (loading) {
+    return <div>Loading...</div>;
   }
-}, [auth, navigate]);
-
-
 
   return (
     <div className='min-h-[calc(100vh-120px)] md:flex hidden'>

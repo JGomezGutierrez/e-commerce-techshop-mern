@@ -3,7 +3,10 @@ import mongoosePagination from "mongoose-paginate-v2";
 
 
 const addToCartSchema = new Schema({
-   productId: String, 
+   productId: {
+      ref: 'productModel',
+      type: String,
+   }, 
    quantity: Number,
    userId: String,
 },{

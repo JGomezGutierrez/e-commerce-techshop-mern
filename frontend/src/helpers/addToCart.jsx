@@ -31,9 +31,14 @@ const addToCart = async (e, id) => {
         } else {
             toast.error(data.message);
         }
+
+        return data
     } catch (error) {
         toast.error("Error al agregar el producto al carrito");
     }
+    
 };
+
+
 
 export default addToCart;

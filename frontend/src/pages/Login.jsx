@@ -1,4 +1,4 @@
-import React, {  useState } from 'react';
+import React, {  useEffect, useState } from 'react';
 import LoginIcons from '../assets/imagenavatar.gif';
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
@@ -15,17 +15,28 @@ const Login = () => {
 
   const [showPassword, setShowPassword] = useState(false)
 
+  // Estado para validar si el usuario se identificó correctamente
+  const [ logged, setLogged ] = useState("not_logged");
 
   //constante de navegacion
   const navigate = useNavigate()
   
-  // Estado para usar useAuth y setear los valos del usuario autenticado en el Provider automáticamente
+  // Estado para usar useAuth y setear los valores del usuario autenticado en el Provider automáticamente
   const {setAuth} = useAuth();
 
   const { form, handleOnchange } = useForm({
     email: "",
     password: ""
   });
+
+  
+  // Efecto para redirigir al usuario si está logueado
+  useEffect(() => {
+    if (logged === "logged") {
+      navigate('/inicio');
+    }
+  }, [logged, navigate]);
+
 
   // Guardar un usuario en la BD
   const loginUser = async(e) => {
@@ -51,17 +62,16 @@ const Login = () => {
 
       // Manejo de respuestas según el código de estado
       if (request.ok && data.status === "success") {
+  
         toast.success(data.message);
-        // Cookies.set('token', data.token); // Guarda el token en la cookie
+        // Persistir los datos en el navegador guardando en el localstorage
         localStorage.setItem("token", data.token);
         localStorage.setItem("user", JSON.stringify(data.user));  // Guardar datos del usuario en localStorage
         
         setAuth({ token: data.token, user: data.user }); // Setear los datos del usuario en el Auth
-        
-        setTimeout(() => {
-          navigate('/inicio');
-        }, 1000);
+        setLogged("logged");
       } else {
+        setLogged("error");
         toast.warn(data.message);
       }
     } catch(error) {
@@ -72,6 +82,7 @@ const Login = () => {
   return (
     <section>
       <div className='login-container'>
+
        
         <div className='login'>
             <div className='login-logo'>
@@ -105,6 +116,7 @@ const Login = () => {
 
               <button className='login-button'>Ingresar</button>
             </form>
+
 
             <p className='my-5'> ¿Aún no tienes Cuenta? <NavLink to={'/registro'} className='link-signup'>¡Registrate!</NavLink></p>
         

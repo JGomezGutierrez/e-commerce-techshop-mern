@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import UploadProducts from '../components/UploadProducts'
 import { Global } from '../helpers/Global';
 import { toast } from 'react-toastify';
-import ProductCard from '../components/ProductCard';
+import ProductCard from '../components/AdminProductCard';
 
 const Products = () => {
   

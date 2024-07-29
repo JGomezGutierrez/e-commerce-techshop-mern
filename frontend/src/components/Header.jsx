@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Logo from './Logo';
 import { GrSearch } from "react-icons/gr";
 import { FaUserCircle } from "react-icons/fa";
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
 import Logout from '../pages/Logout';
 import { BsCart3 } from "react-icons/bs";
@@ -17,14 +17,17 @@ const Header = () => {
   const { auth, cartCount  } = useAuth();
   const [menuDisplay, setMenuDisplay] = useState(false);
 
+   // Useeffect para forzar la actualización del componente Header cuando cartCount cambia
+   useEffect(() => {}, [auth]);
+
 
   return (
     <header className='header'>
       <div className='header-container'>
         <div className='header-logo'>
-          <NavLink to={"/"}>
+          <Link to={"/"}>
             <Logo/>
-          </NavLink>
+          </Link>
         </div>
 
         <div className='header-search'>
@@ -38,7 +41,7 @@ const Header = () => {
             <div className='relative group flex justify-center'>
               
               {
-                auth?.user?.id && (
+                auth?.user?._id && (
                   <div className = 'profile-icon' onClick={()=>setMenuDisplay((preve) => !preve)}>
                     {
                        auth?.user?.profileAvatar ? (
@@ -57,7 +60,7 @@ const Header = () => {
                   <ul>
                     {
                       auth?.user?.role === 'admin' && (
-                        <NavLink to= {"/panel-administrativo"} className='whitespace-nowrap hidden md:block hover:bg-slate-100 p-2' onClick={()=>setMenuDisplay((preve) => !preve)}>Panel Administrativo</NavLink>
+                        <Link to= {"/panel-administrativo"} className='whitespace-nowrap hidden md:block hover:bg-slate-100 p-2' onClick={()=>setMenuDisplay((preve) => !preve)}>Panel Administrativo</Link>
                       )
                     }
                       
@@ -69,20 +72,20 @@ const Header = () => {
           </div>
 
               {
-                 auth?.user?.id && (
-                  <div className='cart-icon'>
-                  <span><BsCart3 className=''/></span>
-                  <div className='cart-count'>
-                    <p className='text-sm'>{cartCount}</p>
-                  </div>
-              </div>
+                 auth?.user?._id && (
+                  <Link to= {"/carrito-de-compra"} className='cart-icon'>
+                    <span><BsCart3 className=''/></span>
+                    <div className='cart-count'>
+                      <p className='text-sm'>{cartCount}</p>
+                    </div>
+                  </Link>
                  )
 
               }
 
           <div>
             {
-              auth?.user?.id ?(
+              auth?.user?._id ?(
                 <Logout/>
               ) : (
                 <NavLink to={"/login"} className='logout-button'>Iniciar Sesión</NavLink>

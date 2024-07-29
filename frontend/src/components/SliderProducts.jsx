@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import image1 from '../assets/slider/imagen1_web.png';
-import image2 from '../assets/slider/imagen1_web.png';
-import image3 from '../assets/slider/imagen1_web.png';
-import image4 from '../assets/slider/imagen1_web.png';
+// import image2 from '../assets/slider/img2_mobile.webp';
+// import image3 from '../assets/slider/imagen3_web.png';
+// import image4 from '../assets/slider/imagen4_web.png';
 import { FaAngleRight } from "react-icons/fa6";
 import { FaAngleLeft } from "react-icons/fa6";
 
@@ -12,9 +12,9 @@ const SliderProducts = () => {
     const [currentImage, setCurrentImage] = useState(0)
     const desktopImages = [
        image1,
-       image2,
-       image3,
-       image4         
+    //    image2,
+    //    image3,
+    //    image4         
     ]
 
     const nextImage = () =>{
@@ -68,9 +68,9 @@ const SliderProducts = () => {
           {/*version para telefonos móviles*/}
           <div className='flex w-full h-full overflow-hidden md:hidden'>
             {
-                desktopImages.map((image, index)=>{
+                desktopImages.map((image,index)=>{
                 return (
-                <div className='w-full h-full min-w-full min-h-full transition-all' key={image} style={{transform : `translateX(-${currentImage * 100}%)`}}>
+                <div className='w-full h-full min-w-full min-h-full transition-all' key={index} style={{transform : `translateX(-${currentImage * 100}%)`}}>
                     <img src={image} className='w-full h-full object-cover' />
                 </div>
                 )

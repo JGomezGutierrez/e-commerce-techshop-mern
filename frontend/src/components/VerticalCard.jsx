@@ -4,6 +4,7 @@ import currencyRates from '../helpers/currencyRates'
 import { FaAngleLeft, FaAngleRight } from 'react-icons/fa6'
 import { Link } from 'react-router-dom'
 import addToCart from '../helpers/addToCart'
+import useAuth from '../hooks/useAuth'
 
 const VerticalCardProduct = ({category, title}) => {
     const [product, setProduct] = useState([])
@@ -12,6 +13,15 @@ const VerticalCardProduct = ({category, title}) => {
  
     const [scrollbar, setScrollbar] = useState(0);
     const scrollbarElement = useRef();
+
+    const { cartCount, setCartCount } = useAuth(); 
+
+    const handleAddToCart = async (e, id) => {
+        const data = await addToCart(e, id);
+        if (data?.status === 'success') {
+            setCartCount(prevCount => prevCount + 1);
+        }
+    };
 
     useEffect(() => {
     getCategoryWiseProduct(category)
@@ -105,7 +115,7 @@ const scrollbarLeft = () => {
                             <p className='text-red-600 font-medium'>{currencyRates (product?.sellingPrice)}</p>
                             <p className='text-slate-500 line-through'>{currencyRates (product?.price)}</p>
                         </div>
-                        <button className='text-sm bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-full' onClick={(e)=>addToCart(e,product?._id)}>Agregar al carrito</button>
+                        <button className='text-sm bg-yellow-600 hover:bg-yellow-700 text-white px-3 py-1 rounded-full' onClick={(e) => handleAddToCart(e, product?._id)}>Agregar al carrito</button>
                       </div>
                     </Link>
                   )

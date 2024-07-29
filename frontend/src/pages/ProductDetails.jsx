@@ -3,6 +3,8 @@ import { useParams } from 'react-router-dom';
 import { Global } from '../helpers/Global';
 import currencyRates from '../helpers/currencyRates';
 import RecommendedProducts from '../components/RecommendedProducts';
+import useAuth from '../hooks/useAuth';
+import addToCart from '../helpers/addToCart';
 
 const ProductDetails = () => {
   const [product, setProduct] = useState({
@@ -22,6 +24,15 @@ const ProductDetails = () => {
   const [zoomImageCoordinate, setZoomImageCoordinate] = useState({ x: 0, y: 0 });
 
   const [zoomImage, setZoomImage] = useState (false)
+
+  const { setCartCount } = useAuth(); 
+
+  const handleAddToCart = async (e, id) => {
+      const data = await addToCart(e, id);
+      if (data?.status === 'success') {
+          setCartCount(prevCount => prevCount + 1);
+      }
+  };
 
   const getProductsDetails = useCallback(async () => {
     setLoading(true);
@@ -120,7 +131,7 @@ const ProductDetails = () => {
               ) : (
                 <div className='flex gap-2 lg:flex-col overflow-scroll scrollbar-none h-full'>
                   {product.productImage.map((img, index) => (
-                    <div className='h-20 w-20 bg-slate-100 rounded p-1' key={img}>
+                    <div className='h-20 w-20 bg-white rounded p-1' key={img}>
                       <img
                         src={img}
                         alt={product.productName}
@@ -147,10 +158,10 @@ const ProductDetails = () => {
               <p className='text-slate-500 mb-2'>Categoría: {product.category}</p>
               <p className='text-slate-500 mb-4'>Descripción: {product.description}</p>
               <div className='flex gap-4 mb-4'>
-                <p className='text-red-600 font-medium text-lg'> {currencyRates(product.sellingPrice)}</p>
-                <p className='text-slate-500 line-through'>{currencyRates(product.price)}</p>
+                <p className='text-red-600 font-semibold text-2xl'> {currencyRates(product.sellingPrice)}</p>
+                <p className='text-slate-500 line-through text-lg'>{currencyRates(product.price)}</p>
               </div>
-              <button className='text-sm bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-full'>
+              <button className='text-md bg-yellow-600 hover:bg-yellow-700 text-white px-3 py-1 rounded-full' onClick={(e) => handleAddToCart(e, product?._id)}>
                 Agregar al carrito
               </button>
             </div>
